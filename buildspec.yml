@@ -8,7 +8,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - echo $GHCR_TOKEN | docker login ghcr.io -u phyyou --pa 
+      - echo $GHCR_TOKEN | docker login ghcr.io -u phyyou --password-stdin 
   build:
     commands:
       - echo Build started on `date`
