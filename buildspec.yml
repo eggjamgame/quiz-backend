@@ -1,0 +1,22 @@
+version: 0.2
+
+env:
+  variables:
+    IMAGE_TAG: "0.1.0"
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - echo $GHCR_TOKEN | docker login ghcr.io -u phyyou --pa 
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build -t quiz-backend:$IMAGE_TAG .
+      - docker tag quiz-backend:$IMAGE_TAG ghcr.io/eggjamgame/quiz-backend:$IMAGE_TAG      
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push ghcr.io/eggjamgame/quiz-backend:$IMAGE_TAG
