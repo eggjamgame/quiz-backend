@@ -23,4 +23,4 @@ app = FastAPI(
 
 app.include_router(api_router)
 
-app.mount("/static", StaticFiles(directory=settings.IMG_DIR), name="static")
+# app.mount("/static", StaticFiles(directory=settings.IMG_DIR), name="static")
