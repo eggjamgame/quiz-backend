@@ -4,6 +4,9 @@
             "name": "Python: FastAPI",
             "type": "python",
             "request": "launch",
+            "env": {
+                "PYTHONPATH": "./app"
+            },
             "module": "uvicorn",
             "args": [
                 "app.main:app"
