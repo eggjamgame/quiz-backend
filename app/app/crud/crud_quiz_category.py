@@ -8,7 +8,7 @@ from app.models.quiz_category import QuizCategory
 from app.schemas.quiz_category import QuizCategoryCreate, QuizCategoryUpdate
 
 
-class QuizCategory(CRUDBase[QuizCategory, QuizCategoryCreate, QuizCategoryUpdate]):
+class CRUDQuizCategory(CRUDBase[QuizCategory, QuizCategoryCreate, QuizCategoryUpdate]):
     pass
 
-quiz_category = QuizCategory(QuizCategory)
+quiz_category = CRUDQuizCategory(QuizCategory)
