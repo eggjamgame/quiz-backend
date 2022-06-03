@@ -7,6 +7,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - echo $GHCR_TOKEN | docker login ghcr.io -u phyyou --password-stdin 
   build:
+    on-failure: ABORT
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...          
@@ -22,7 +23,7 @@ phases:
       - cd homelab
       - git config user.name "AWS CodeBuild"
       - git config user.email "gydudwls@gmail.com"
-      - "sed -i 's/tag: .*$/tag: \"$CODEBUILD_RESOLVED_SOURCE_VERSION\"/g' charts/eggjam/backend/values.yaml"
+      - "sed -i \"s/tag: .*$/tag: $CODEBUILD_RESOLVED_SOURCE_VERSION/g\" charts/eggjam/backend/values.yaml"
       - git add charts/eggjam/backend/values.yaml
       - git commit -m "Update eggjam-backend to $CODEBUILD_RESOLVED_SOURCE_VERSION"
       - git push
