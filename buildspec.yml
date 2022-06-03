@@ -23,5 +23,6 @@ phases:
       - git config user.name "AWS CodeBuild"
       - git config user.email "gydudwls@gmail.com"
       - "sed -i 's/tag: .*$/tag: \"$CODEBUILD_RESOLVED_SOURCE_VERSION\"/g' charts/eggjam/backend/values.yaml"
-      - git add charts/eggjam/backend/values.yaml -m "Update eggjam-backend to $CODEBUILD_RESOLVED_SOURCE_VERSION"
+      - git add charts/eggjam/backend/values.yaml
+      - git commit -m "Update eggjam-backend to $CODEBUILD_RESOLVED_SOURCE_VERSION"
       - git push
