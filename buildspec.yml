@@ -1,8 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    IMAGE_TAG: "0.1.2"
 
 phases:
   pre_build:
@@ -13,10 +10,17 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...          
-      - docker build -t quiz-backend:$IMAGE_TAG .
-      - docker tag quiz-backend:$IMAGE_TAG ghcr.io/eggjamgame/quiz-backend:$IMAGE_TAG      
+      - docker build -t quiz-backend:$CODEBUILD_RESOLVED_SOURCE_VERSION .
+      - docker tag quiz-backend:$CODEBUILD_RESOLVED_SOURCE_VERSION ghcr.io/eggjamgame/quiz-backend:$CODEBUILD_RESOLVED_SOURCE_VERSION      
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push ghcr.io/eggjamgame/quiz-backend:$IMAGE_TAG
+      - docker push ghcr.io/eggjamgame/quiz-backend:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo to Push values.yaml file to GitOps Repo for Upgrade Version. 
+      - git clone https://phyyou:$GHCR_TOKEN@github.com/phyyou/homelab.git
+      - cd homelab
+      - git config user.name "AWS CodeBuild"
+      - git config user.email "gydudwls@gmail.com"
+      - "sed -i 's/tag: .*$/tag: \"$CODEBUILD_RESOLVED_SOURCE_VERSION\"/g' charts/eggjam/backend/values.yaml"
+      - git add charts/eggjam/backend/values.yaml -m "Update eggjam-backend to $CODEBUILD_RESOLVED_SOURCE_VERSION"
